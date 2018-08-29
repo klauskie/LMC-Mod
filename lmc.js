@@ -15,19 +15,23 @@ const HALT = "000";
 const INPUT = "901";
 const OUTPUT = "902";
 
-function run(program){
+function run(){
 
     calculator = 0;
     counter = 0;
+
+    var program = document.getElementById("inpts");
 
     var content = "";
 
     do{
         // Print state
         console.log("--- Calculator: " + calculator + " : Counter: " + counter);
+        document.getElementById("counterBox").value = counter;
+        document.getElementById("calculatorBox").value = calculator;
 
         // Fetch instruction
-        content = program[counter];
+        content = String(program[counter].value);
         console.log(content);
 
         // Excecute instruction
@@ -49,22 +53,22 @@ function excecute(content, program){
     switch(instruction){
         case ADD:
             console.log("Inside ADD...");
-            calculator += parseInt(program[direction]);
+            calculator += parseInt(program[direction].value);
             break;
 
         case SUB:
             console.log("Inside SUB...");
-            calculator -= parseInt(program[direction]);
+            calculator -= parseInt(program[direction].value);
             break;
         
         case STO:
             console.log("Inside STO...");
-            program[direction] = calculator;
+            program[direction].value = calculator;
             break;
         
         case LOAD:
             console.log("Inside LOAD...");
-            calculator = parseInt(program[direction]);
+            calculator = parseInt(program[direction].value);
             console.log("LOAD -> Calculator: " + calculator);
             break;
 
