@@ -2,6 +2,7 @@
 
 var calculator = 0;
 var counter = 0;
+var content = "";
 
 const ADD = "1";
 const SUB = "2";
@@ -41,6 +42,35 @@ function run(){
         counter++;
 
     }while(content != HALT);
+}
+
+function runStep(){
+
+    if (counter == 0){
+        calculator = 0;
+        content = "";
+    }
+    
+    var program = document.getElementById("inpts");
+
+    // Print state
+    console.log("--- Calculator: " + calculator + " : Counter: " + counter);
+    document.getElementById("counterBox").value = counter;
+    document.getElementById("calculatorBox").value = calculator;
+
+    // Fetch instruction
+    content = String(program[counter].value);
+    console.log(content);
+
+    if(content != HALT){
+        // Excecute instruction
+        excecute(content, program)
+        counter++;
+    }else{
+        // disable button
+        document.getElementById("stepBtn").disabled = true;
+    }
+
 }
 
 function excecute(content, program){
@@ -96,7 +126,7 @@ function excecute(content, program){
                 calculator = parseInt(val);
             }else if (direction == "02"){
                 // output
-                document.getElementById("outputBox").innerHTML = calculator;
+                document.getElementById("outputBox").value = calculator;
                 console.log(calculator);
             }else{
                 // error en 900
@@ -110,3 +140,6 @@ function excecute(content, program){
     }
     
 }
+
+
+

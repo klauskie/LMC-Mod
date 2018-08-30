@@ -77,3 +77,6 @@ input[type='checkbox']:checked {
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#415989', endColorstr='#2e466e',GradientType=0);
 	background-color:#415989;
 }
+ button :disabled, button[disabled]{
+	background-color:red;
+}
