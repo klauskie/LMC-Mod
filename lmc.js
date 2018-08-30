@@ -3,6 +3,7 @@
 var calculator = 0;
 var counter = 0;
 var content = "";
+var outputL = [];
 
 const ADD = "1";
 const SUB = "2";
@@ -12,10 +13,12 @@ const BR = "6";
 const BZ = "7";
 const BP = "8";
 const HALT = "000";
+const RET = "999"
 
 const INPUT = "901";
 const OUTPUT = "902";
 
+// Continuous run
 function run(){
 
     calculator = 0;
@@ -44,14 +47,30 @@ function run(){
     }while(content != HALT);
 }
 
+// Step by step run
 function runStep(){
 
     if (counter == 0){
         calculator = 0;
         content = "";
     }
+
     
     var program = document.getElementById("inpts");
+    
+    var valCheck = document.getElementById("chbox").checked;
+    
+
+    // Interrupt
+    if(valCheck){ // first time
+        console.log("Interrupt!");
+        var ncounter = parseInt(document.getElementById("mbox").value);
+        interruptSTO(program, ncounter);
+        document.getElementById("chbox").checked = false;
+        calculator = 0;
+        content = "";
+    }
+    
 
     // Print state
     console.log("--- Calculator: " + calculator + " : Counter: " + counter);
@@ -64,7 +83,7 @@ function runStep(){
 
     if(content != HALT){
         // Excecute instruction
-        excecute(content, program)
+        excecute(content, program);
         counter++;
     }else{
         // disable button
@@ -73,6 +92,32 @@ function runStep(){
 
 }
 
+// Used to store the state before an interruption
+function interruptSTO(program, ncounter){
+    // Store counter value
+    program[98].value = counter;
+
+    // Store calculator value
+    program[99].value = calculator;
+
+    // Set new counter
+    counter = ncounter;
+    
+}
+
+// Used to load the state after an interruption
+function interruptLOAD(program){
+    // Load counter value
+    counter = program[98].value;
+
+    // Load calculator value
+    calculator = program[99].value;
+
+    // errase mailboxes 98, 99
+    program[98].value = program[99].value = 0;
+}
+
+// Excecute
 function excecute(content, program){
 
     var instruction = content.charAt(0);
@@ -123,19 +168,22 @@ function excecute(content, program){
             if(direction == "01"){
                 // input
                 var val = document.getElementById("inputBox").value;
+                if(val === null){
+                    console.log("Input box empty...");
+                }
                 calculator = parseInt(val);
             }else if (direction == "02"){
                 // output
-                document.getElementById("outputBox").value = calculator;
-                console.log(calculator);
-            }else{
-                // error en 900
+                outputL.push(calculator);
+                document.getElementById("outputBox").value = outputL;
+                console.log(outputL);
+            }else if(direction == "99"){
+                // RET: Interrupt load
+                interruptLOAD(program);
+                console.log("Fin de interrupt!");
             }
             break;
         
-        default:
-            // error
-            break;
 
     }
     
