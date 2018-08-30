@@ -4,6 +4,7 @@ var calculator = 0;
 var counter = 0;
 var content = "";
 var outputL = [];
+var flag = true;
 
 const ADD = "1";
 const SUB = "2";
@@ -13,18 +14,12 @@ const BR = "6";
 const BZ = "7";
 const BP = "8";
 const HALT = "000";
-const RET = "999"
-
-const INPUT = "901";
-const OUTPUT = "902";
 
 // Continuous run
 function run(){
 
-    calculator = 0;
-    counter = 0;
-
     var program = document.getElementById("inpts");
+    
 
     var content = "";
 
@@ -36,13 +31,16 @@ function run(){
 
         // Fetch instruction
         content = String(program[counter].value);
-        console.log(content);
+        console.log("Content: " + content);
 
         // Excecute instruction
-        excecute(content, program)
-
-        // Increment counter
-        counter++;
+        if(flag){
+            excecute(content, program);
+        }else{
+            flag = true;
+            break;
+        }
+        
 
     }while(content != HALT);
 }
@@ -114,7 +112,15 @@ function interruptLOAD(program){
     calculator = program[99].value;
 
     // errase mailboxes 98, 99
-    program[98].value = program[99].value = 0;
+    program[98].value = program[99].value = "";
+}
+
+// Reset values
+function reset(){
+    calculator = 0;
+    counter = 0;
+    document.getElementById("counterBox").value = counter;
+    document.getElementById("calculatorBox").value = calculator;
 }
 
 // Excecute
@@ -171,27 +177,33 @@ function excecute(content, program){
                 console.log("Input: " + val);
                 if(val === ""){
                     console.log("Input box empty...");
+                    flag = false;
                     return;
                 }else{
                     calculator = parseInt(val);
+                    document.getElementById("inputBox").value = "";
                 }
             }else if (direction == "02"){
                 // output
-                outputL.push(calculator);
-                document.getElementById("outputBox").value = outputL;
-                console.log(outputL);
+                ouputGrow();
+                //outputL.push(calculator);
+                //document.getElementById("outputBox").value = outputL;
+                //console.log(outputL);
             }else if(direction == "99"){
                 // RET: Interrupt load
                 interruptLOAD(program);
                 console.log("Fin de interrupt!");
             }
             break;
+
+        default:
+            break;
         
 
     }
+
     // Increment counter
     counter++;
-    
 }
 
 

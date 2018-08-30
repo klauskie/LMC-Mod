@@ -8,8 +8,11 @@ body{
     height: 300px;
 }
 
-.left, .right {
-  width: 10%;
+.left {
+  width: 20%;
+}
+.right {
+	width: 10%;
 }
 
 .middle {
@@ -18,15 +21,26 @@ body{
   background: #eee;
 }
 
+
 .row:after {
     content: "";
     display: table;
     clear: both;
 }
+div {
+	background: #eee;
+}
+input[type=text], input[type=number] {
+    border: 4px solid #23395e;
+	border-radius: 5px;  
+}
+
 input{
     width: 60px;
     height: 30px;
-    margin: 3px;   
+	margin: 3px;   
+	text-align: center;
+
 }
 input[type = 'checkbox']{
 	display: inline-block;
@@ -37,6 +51,7 @@ input[type = 'checkbox']{
     border-radius:5px;
 	border:2px solid #555;
 	margin-top: 20px;
+
 }
 input[type='checkbox']:checked {
     background: #23395e;
@@ -76,7 +91,4 @@ input[type='checkbox']:checked {
 	background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#415989', endColorstr='#2e466e',GradientType=0);
 	background-color:#415989;
-}
- button :disabled, button[disabled]{
-	background-color:red;
 }

@@ -14,12 +14,14 @@
     <div>
         <h1 style="text-align: center">LittleManComputer</h1>
     </div>
-    
 
     <div class="row">
       <div class="column left">
-        <p>Input: <input type="number" id="inputBox"></p>
-        <p>Output: <input type="text" disabled id="outputBox"></p>
+        <p>Input: <input type="text" id="inputBox" maxlength="3"></p>
+        
+        <div style="background: #eee;">
+            <p id="outputBox">Output:</p>
+        </div>
         <p>Counter: <input type="text" disabled id="counterBox"></p>
         <p>Calculator: <input type="text" disabled id="calculatorBox"></p>
         <br>
@@ -29,15 +31,15 @@
         <form action="" id="inpts"></form>
         </div>
         <div class="column right">
-            <button class="myButton" onclick="runStep()" id="stepBtn">Make Step</button>
+            <button class="myButton" onclick="runStep()" id="stepBtn">Step by Step</button>
             <button class="myButton" onclick="run()">Run</button>
             <br>
             <div>
-                <label><input type="number" placeholder="Mailbox" id="mbox">   <input type="checkbox" name="checkbox" id="chbox"></label>
-
+                <label> <input type="number" placeholder= " Mailbox" id="mbox"> <input type="checkbox" name="checkbox" id="chbox"> </label>                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <button id="reset" class="myButton" onClick="reset()">Reset</button>
             </div>
         </div>
     </div>
-    
+
 </body>
 </html>
