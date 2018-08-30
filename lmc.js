@@ -84,7 +84,7 @@ function runStep(){
     if(content != HALT){
         // Excecute instruction
         excecute(content, program);
-        counter++;
+        
     }else{
         // disable button
         document.getElementById("stepBtn").disabled = true;
@@ -168,10 +168,13 @@ function excecute(content, program){
             if(direction == "01"){
                 // input
                 var val = document.getElementById("inputBox").value;
-                if(val === null){
+                console.log("Input: " + val);
+                if(val === ""){
                     console.log("Input box empty...");
+                    return;
+                }else{
+                    calculator = parseInt(val);
                 }
-                calculator = parseInt(val);
             }else if (direction == "02"){
                 // output
                 outputL.push(calculator);
@@ -186,6 +189,8 @@ function excecute(content, program){
         
 
     }
+    // Increment counter
+    counter++;
     
 }
 
