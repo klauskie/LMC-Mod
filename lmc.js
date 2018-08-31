@@ -4,7 +4,7 @@ var calculator = 0;
 var counter = 0;
 var content = "";
 var outputL = [];
-var flag = true;
+var flag = true; // Para que se detenga con los inputs.
 
 const ADD = "1";
 const SUB = "2";
@@ -18,9 +18,8 @@ const HALT = "000";
 // Continuous run
 function run(){
 
+    // Load mailboxes into program
     var program = document.getElementById("inpts");
-    
-
     var content = "";
 
     do{
@@ -43,6 +42,8 @@ function run(){
         
 
     }while(content != HALT);
+
+    document.getElementById("message").innerHTML = "End of program.";
 }
 
 // Step by step run
@@ -86,6 +87,7 @@ function runStep(){
     }else{
         // disable button
         document.getElementById("stepBtn").disabled = true;
+        document.getElementById("message").innerHTML = "End of program.";
     }
 
 }
@@ -100,6 +102,9 @@ function interruptSTO(program, ncounter){
 
     // Set new counter
     counter = ncounter;
+
+    // Set message
+    document.getElementById("message").innerHTML = "Interruption activated. Counter: " + String(counter);
     
 }
 
@@ -121,11 +126,17 @@ function reset(){
     counter = 0;
     document.getElementById("counterBox").value = counter;
     document.getElementById("calculatorBox").value = calculator;
+    $("input").remove("outputBox");
+    $("#stepBtn").prop("disabled", false);
 }
 
 // Excecute
 function excecute(content, program){
 
+    // Clear message box
+    document.getElementById("message").innerHTML = "";
+
+    // Content -> instruction/direction
     var instruction = content.charAt(0);
     var direction = parseInt(content.substring(1,3));
 
@@ -134,21 +145,25 @@ function excecute(content, program){
     switch(instruction){
         case ADD:
             console.log("Inside ADD...");
+            document.getElementById("message").innerHTML = "ADD instruction activated.";
             calculator += parseInt(program[direction].value);
             break;
 
         case SUB:
             console.log("Inside SUB...");
+            document.getElementById("message").innerHTML = "SUB instruction activated.";
             calculator -= parseInt(program[direction].value);
             break;
         
         case STO:
             console.log("Inside STO...");
+            document.getElementById("message").innerHTML = "STO instruction activated.";
             program[direction].value = calculator;
             break;
         
         case LOAD:
             console.log("Inside LOAD...");
+            document.getElementById("message").innerHTML = "LOAD instruction activated.";
             calculator = parseInt(program[direction].value);
             console.log("LOAD -> Calculator: " + calculator);
             break;
@@ -156,18 +171,19 @@ function excecute(content, program){
         case BR:
             console.log("Inside BR...");
             counter = direction - 1;
+            document.getElementById("message").innerHTML = "BR instruction activated. Branching into " + String(counter+1);
             break;
 
         case BZ:
             console.log("Inside BZ...");
-            counter = (calculator == 0) ? direction : counter;
-            counter--;
+            counter = (calculator == 0) ? direction - 1 : counter;
+            document.getElementById("message").innerHTML = "BZero instruction activated.";
             break;
 
         case BP:
             console.log("Inside BP...");
-            counter = (calculator >= 0) ? direction : counter;
-            counter--;
+            counter = (calculator >= 0) ? direction - 1 : counter;
+            document.getElementById("message").innerHTML = "BPositive instruction activated.";
             break;
 
         case "9":
@@ -177,6 +193,7 @@ function excecute(content, program){
                 console.log("Input: " + val);
                 if(val === ""){
                     console.log("Input box empty...");
+                    document.getElementById("message").innerHTML = "Input box empty. Please enter something into the input box.";
                     flag = false;
                     return;
                 }else{
@@ -186,12 +203,10 @@ function excecute(content, program){
             }else if (direction == "02"){
                 // output
                 ouputGrow();
-                //outputL.push(calculator);
-                //document.getElementById("outputBox").value = outputL;
-                //console.log(outputL);
             }else if(direction == "99"){
                 // RET: Interrupt load
                 interruptLOAD(program);
+                document.getElementById("message").innerHTML = "Interruption ended.";
                 console.log("Fin de interrupt!");
             }
             break;
