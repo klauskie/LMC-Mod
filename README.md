@@ -1,5 +1,4 @@
-# Little Man Computer
-## with Interruption functionality
+# Little Man Computer with Interruption functionality
 ---
 Run the file `index.html` on the browser.
 
