@@ -126,8 +126,8 @@ function reset(){
     counter = 0;
     document.getElementById("counterBox").value = counter;
     document.getElementById("calculatorBox").value = calculator;
-    $("input").remove("outputBox");
-    $("#stepBtn").prop("disabled", false);
+    $("#stepBtn").prop('disabled', false);
+    document.getElementById("message").innerHTML = "Calculator, counter and output box set to zero. "
 }
 
 // Excecute
