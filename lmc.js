@@ -111,7 +111,7 @@ function interruptSTO(program, ncounter){
 // Used to load the state after an interruption
 function interruptLOAD(program){
     // Load counter value
-    counter = program[98].value;
+    counter = program[98].value - 1;
 
     // Load calculator value
     calculator = program[99].value;
