@@ -44,7 +44,12 @@ function run(){
 
     }while(content != HALT);
 
-    document.getElementById("message").innerHTML = "End of program.";
+    if(content == "901"){
+        document.getElementById("message").innerHTML = "Input box empty. Please enter something into the input box.";
+    }else{
+        document.getElementById("message").innerHTML = "End of program.";
+    }
+    
 }
 
 // Step by step run
@@ -128,7 +133,8 @@ function reset(){
     document.getElementById("counterBox").value = counter;
     document.getElementById("calculatorBox").value = calculator;
     $("#stepBtn").prop('disabled', false);
-    document.getElementById("message").innerHTML = "Calculator, counter and output box set to zero. "
+    document.getElementById("message").innerHTML = "Calculator, counter and output box set to zero. ";
+    document.getElementById("calcFlag").style.backgroundColor = '#00cc00';
 }
 
 // Set value of calculator and color
