@@ -47,4 +47,4 @@ const regexBNums = (inp) => {
             inp.maxLength = 3;
         }
      });
-} 
+}

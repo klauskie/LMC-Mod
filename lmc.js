@@ -26,7 +26,7 @@ function run(){
         // Print state
         console.log("--- Calculator: " + calculator + " : Counter: " + counter);
         document.getElementById("counterBox").value = counter;
-        document.getElementById("calculatorBox").value = calculator;
+        calcHelper(); // Update color and value of calculator
 
         // Fetch instruction
         content = String(program[counter].value);
@@ -39,7 +39,8 @@ function run(){
             flag = true;
             break;
         }
-        
+        // Update color of calculator
+        calcHelper();
 
     }while(content != HALT);
 
@@ -74,7 +75,7 @@ function runStep(){
     // Print state
     console.log("--- Calculator: " + calculator + " : Counter: " + counter);
     document.getElementById("counterBox").value = counter;
-    document.getElementById("calculatorBox").value = calculator;
+    calcHelper(); // Update color and value of calculator
 
     // Fetch instruction
     content = String(program[counter].value);
@@ -128,6 +129,17 @@ function reset(){
     document.getElementById("calculatorBox").value = calculator;
     $("#stepBtn").prop('disabled', false);
     document.getElementById("message").innerHTML = "Calculator, counter and output box set to zero. "
+}
+
+// Set value of calculator and color
+function calcHelper(){
+    if (calculator < 0){
+        document.getElementById("calcFlag").style.backgroundColor = '#ff0000';
+        document.getElementById("calculatorBox").value = Math.abs(calculator);
+    }else{
+        document.getElementById("calcFlag").style.backgroundColor = '#00cc00';
+        document.getElementById("calculatorBox").value = calculator;
+    }
 }
 
 // Excecute
